@@ -1,0 +1,18 @@
+print.stpp <- function(X)
+{
+	cat("Space-time point process\n")
+	cat("Points:\n")
+	cat("x: ")
+	print(X$x)
+	cat("y: ")
+	print(X$y)
+	cat("t: ")
+	print(X$t)
+	cat("Space-time window:\n")
+	cat("x-range: ")
+	print(X$xcoord)
+	cat("y-range: ")
+	print(X$ycoord)
+	cat("t-range: ")
+	print(X$tcoord)
+}

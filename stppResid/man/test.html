@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Calculate tessellation residuals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for tessresid"><tr><td>tessresid</td><td align="right">R Documentation</td></tr></table>
+
+<h2>
+Calculate tessellation residuals
+</h2>
+
+<h3>Description</h3>
+
+
+<p><code>tessresid</code> divides the space-time window into bins using a Voronoi tessellation and calculates residuals within each bin for a specified conditional intensity model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tessresid(X, cifunction, theta = NULL, algthm = c("mc", "miser", "none"), n = 100, n.miser = 10000, ints = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+
+<table summary="R argblock">
+<tr valign="top"><td><code>X</code></td>
+<td>
+
+<p>A <code>&ldquo;stpp&rdquo;</code> object.
+</p>
+</td></tr>
+<tr valign="top"><td><code>cifunction</code></td>
+<td>
+
+<p>A function returning the value of the conditional intensity at all points in <code>X</code>. The function should take arguments <code>X</code> and an optional vector of parameters <code>theta</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>theta</code></td>
+<td>
+
+<p>Optional: A vector of parameters to be passed to <code>cifunction</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>algthm</code></td>
+<td>
+
+<p>The algorithm used for estimating the integrals in each tessellation cell. The three algorithms are <code>&ldquo;mc&rdquo;</code>, <code>&ldquo;miser&rdquo;</code>, and <code>&ldquo;none&rdquo;</code>  
+</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+
+<p>Initial number of sample points in each grid tessellation for approximating integrals. The number of sample points are iteratively increased by <code>n</code> until some accuracy threshold is reached.
+</p>
+</td></tr>
+<tr valign="top"><td><code>n.miser</code></td>
+<td>
+
+<p>The total number of sample points for estimating all integrals.  
+</p>
+</td></tr>
+<tr valign="top"><td><code>ints</code></td>
+<td>
+
+<p>An optional vector of integrals. Must be the same length as the number of tessellation cells, and each element of <code>ints</code> should correspond to each cell in the <code>tile.list</code> that is returned using the <code>deldir</code> function.  
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+
+<p>Tessellation residuals are residuals calculated in bins that are created by dividing up the spatial window using a Voronoi tessellation. Because the bins are based on a tessellation, each bin contains at most one point. The residual in bin i (<i>V_i</i>) is defined by
+</p>
+<p align="center"><i>R_{T}(V_{i}) = &le;ft(1 - \int_{V_{i}}\hat{&lambda;}(x)dx\right)/&radic;{\int_{V_{i}}\hat{&lambda;}(x)dx},</i></p>
+
+<p>where <i>lambda_hat(x)</i> is the fitted conditional intensity model. 
+</p>
+<p>The conditional intensity function, <code>cifunction</code>, should take <code>X</code> as the first argument, and an optional <code>theta</code> as the second argument, and return a vector of conditional intensity estimates with length equal to the number of points in <code>X</code>, i.e. the length of <code>X$x</code>. <code>cifunction</code> is required, while <code>lambda</code> is optional. <code>lambda</code> eliminates the need for <code>tessresid</code> to calculate the conditional intensity at each observed point in <code>X</code>.
+</p>
+<p>The integrals in <i>R_{T}(V_{i})</i> are approximated using one of two algorithms: a simple Monte Carlo (<code>mc</code>) algorithm, or the MISER algorithm. The simple Monte Carlo iteratively adds <code>n</code> sample points to each tessellation cell to approximate the integral, and the iteration stops when some threshold in the accuracy of the approximation is reached. The MISER algorithm samples a total number of <code>n.miser</code> points in a recursive way, sampling the points in locations that have the highest variance. This part can be very slow and the approximations can be very inaccurate. For highest accuracy these algorithms will require a very large <code>n</code> or <code>n.miser</code> depending on the complexity of the conditional intensity functions (some might say ~1 billion sample points are needed for a good approximation). 
+</p>
+<p>Passing the argument <code>ints</code> eliminates the need for approximating the integrals using either of the two algorithms here. However, the <code>tile.list</code> must first be obtained in order to assure that each element of <code>ints</code> corresponds to the correct cell. The <code>tile.list</code> can be obtained, either by using the <code>deldir</code> function separately, or by using <code>tessresid</code> with one of the included algorithms first (the <code>tile.list</code> is returned along with the residuals). <code>tessresid</code> can then be called again with <code>ints</code> included and <code>algthm = &ldquo;none&rdquo;</code>.
+</p>
+<p>However, note that if <code>miser</code> is selected, and if the points in the point pattern are very densely clustered, the integral in some cells may be approximated based on only the point that is contained in the cell. This happens because the cells in these clusters of points will be very small, and so it may be likely that sampled points based on the MISER algorithm will miss these cells entirely. For this reason, the simple Monte Carlo algorithm might be preferred. 
+</p>
+
+
+<h3>Value</h3>
+
+
+<p>Outputs an object of class <code>&ldquo;tessresid&rdquo;</code>, which is a list of
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>X </code></td>
+<td>
+<p> An object of class <code>&ldquo;stpp&rdquo;</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>tile.list </code></td>
+<td>
+<p> An object of type <code>&ldquo;tile.list&rdquo;</code>, which is itself a list with one entry for each point in <code>X</code>. Each entry is a list of
+</p>
+<p>pt: x and y coordinates of the point.
+</p>
+<p>x: x coordinates of the vertices of the tessellation cell.
+</p>
+<p>y: y coordinates of the vertices of the tessellation cell.</p>
+</td></tr> 
+<tr valign="top"><td><code>residuals </code></td>
+<td>
+<p> A vector of tessellation residuals. The order of the residuals corresponds with the order of the cells in <code>tile.list</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+
+<p>Robert Clements
+</p>
+
+
+<h3>See Also</h3>
+
+
+<p><code>gridresid</code>, <code>deldir</code>, <code>tile.list</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+#===&gt; load simulated data &lt;===#
+load(simdata)
+X &lt;- stpp(simdata$x, simdata$y, simdata$t)
+
+#===&gt; define two conditional intensity functions &lt;===#
+ci1 &lt;- function(X, theta){theta*exp(-2*X$x - 2*X$y - 2*X$t)} #correct model
+
+ci2 &lt;- function(X, theta = NULL){rep(250, length(X$x))} #homogeneous Poisson model
+
+tsresiduals &lt;- tessresid(X, ci1, theta = 3000)
+tsresiduals2 &lt;- tessresid(X, ci2)
+#===&gt; plot results &lt;===#
+plot(tsresiduals)
+plot(tsresiduals2)
+</pre>
+
+
+</body></html>
