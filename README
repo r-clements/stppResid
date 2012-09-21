@@ -1,0 +1,26 @@
+stppResid
+
+This repository contains the R code source files, data, and documentation for the stppResid R package.
+
+stppResid stands for "space-time point process residual analysis". The package contains functions for 
+defining a space-time point process (stpp) object, and performing residual analysis using a user defined
+function for the conditional intensity. 
+
+Residual analysis for space-time point processes can be broken down into two general schemes:
+
+1) Pixel-based residuals
+2) Transformation-based residuals
+
+See references in the help files. Perhaps I will write a vignette for this package...someday.
+
+The transformation-based residual functions are fairly quick, but the pixel-based residuals can be very 
+slow because the 3-dimensional integrals must be approximated. The speed of these functions can be improved
+if the conditional intensity function is not very complex (for example, a Hawkes process might be slow). 
+
+
+Future suggested improvements:
+1. Currently, the package only works for rectangular spatial regions. A future update should add support
+for polygonal regions.
+
+2. The integral approximation accuracy and speed can be improved. The accuracy can be poor for discontinuous conditional 
+intensity functions, and the speed can be slow, especially with large datasets.
