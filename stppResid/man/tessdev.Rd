@@ -73,22 +73,23 @@ Note that if \code{miser} is selected, and if the points in the point pattern ar
 \value{
 Prints to the screen the number of simulated points used to approximate the integrals.
 
-Outputs an object of class \code{\dQuote{devresid}}, which is a list of
+Outputs an object of class \code{\dQuote{tessdev}}, which is a list of
 	\item{X }{ An object of class \code{\dQuote{stpp}}.}
-	\item{grid }{ An object of class \code{\dQuote{stgrid}}.}
-	\item{residuals }{ A vector of deviance residuals. The order of the residuals corresponds with the order of the bins in \code{grid}.}
-The following elements are named by model number, e.g. n.1, n.2, integral.1, integral.2, etc..
-  \item{n}{Total number of points used for approximating all integrals.}
+	\item{tile.list }{ An object of class \code{\dQuote{tile.list}}.}
+	\item{residuals }{ A vector of tessellation deviance residuals. The order of the residuals corresponds with the order of the cells (tiles) in \code{tile.list}.}
+If \code{algthm = \dQuote{mc}}, then a list of the following elements are also included for each model that uses the \code{mc} algorithm: 
+  \item{n }{ Vector of the total number of points used for approximating integrals.}
   \item{integral}{Vector of actual integral approximations in each grid cell.}
   \item{mean.lambda}{Vector of the approximate final mean of lambda in each grid cell.}
   \item{sd.lambda}{Vector of the approximate standard deviation of lambda in each grid cell.}
-If the \code{miser} algorithm is selected, the following is also returned:
-  \item{app.pts}{A data frame of the x,y, and t coordinates of a sample of 10,000 of the sampled points for integral approximation, along with the value of lambda (l).}
+If the \code{miser} algorithm is selected, then a list of the following elements are also included for each model that uses the \code{miser} algorithm:
+  \item{n }{ Total number of points used for approximating integrals.}
+  \item{integral }{ Vector of actual integral approximations in each grid cell.}
+  \item{mean.lambda }{ Vector of the approximate final mean of lambda in each grid cell.}
+  \item{sd.lambda }{ Vector of the approximate standard deviation of lambda in each grid cell.}
+  \item{app.pts }{ A data frame of the x,y, and t coordinates of a sample of 10,000 of the sampled points for integral approximation, along with the value of lambda (l).}
 }
 \references{
-Wong, K., Schoenberg, F.P. "On mainshock focal mechanisms and the spatial distribution of aftershocks",  Bulletin of the Seismological Society of America, In review.
-
-Clements, R.A., Schoenberg, F.P., and Schorlemmer, D. (2011) Residual analysis methods for space-time point processes with applications to earthquake forecast models in California. \emph{Annals of Applied Statistics,} \bold{5}, Number 4, 2549--2571.
 }
 \author{
 Robert Clements
@@ -106,7 +107,7 @@ ci1 <- function(X, theta){theta*exp(-2*X$x - 2*X$y - 2*X$t)} #correct model
 
 ci2 <- function(X, theta = NULL){rep(250, length(X$x))} #homogeneous Poisson model
 
-deviance <- devresid(X, ci1, ci2, theta1 = 3000)
+deviance <- tessdev(X, ci1, ci2, theta1 = 3000)
 
 #===> plot results <===#
 plot(deviance)
