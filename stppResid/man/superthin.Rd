@@ -1,8 +1,5 @@
 \name{superthin}
 \alias{superthin}
-\alias{print.superthin}
-\alias{plot.superthin}
-\alias{summary.superthin}
 \title{
 Perform super-thinned residuals method
 }
@@ -14,7 +11,7 @@ superthin(X, cifunction, theta = NULL, k = NULL, lambda = NULL)
 }
 \arguments{
   \item{X}{
-A \code{\dQuote{stpp}} object.
+A \dQuote{\code{stpp}} object.
 }
   \item{cifunction}{
 A function returning the value of the conditional intensity at all points in \code{X}. The function should take arguments \code{X} and an optional vector of parameters \code{theta}.
@@ -30,7 +27,7 @@ Optional: A vector of conditional intensities at each point in \code{X}.
 }
 }
 \details{
-Super-thinned residuals (Clements et. al. (2012)) is a type of transformation based residuals for space-time point processes based on both thinned residuals (see Schoenberg (2003)) and superposed residuals (see Bremaud (1981)). The residuals consist of a set of points that should be homogeneous Poisson, with rate \code{k}, if the model for the conditional intensity is correct. Any patterns or inter-point interaction in the residuals indicates a lack of fit of the model. To test for homogeneity, a commonly used tool is Ripley's K-function, a version of which can be found in the \code{\link{spatstat}} package. 
+Super-thinned residuals (Clements et. al. (2012)) is a type of transformation based residuals for space-time point processes based on both thinned residuals (see Schoenberg (2003)) and superposed residuals (see Bremaud (1981)). The residuals consist of a set of points that should be homogeneous Poisson, with rate \code{k}, if the model for the conditional intensity is correct. Any patterns or inter-point interaction in the residuals indicates a lack of fit of the model. To test for homogeneity, a commonly used tool is Ripley's K-function, a version of which can be found in the \code{spatstat} package. 
 
 Super-thinned residuals are found as follows:
 
@@ -49,8 +46,8 @@ The conditional intensity function, \code{cifunction}, should take \code{X} as t
 If \code{k} is not specified, the default is the mean of \eqn{\hat{\lambda}}{lambda_hat} estimated by the total number of points divided by the volume of the space-time window.
 }
 \value{
-Outputs an object of class \code{\dQuote{superthin}}, which is a list of
-	\item{X }{ An object of class \code{\dQuote{stpp}}.}
+Outputs an object of class \dQuote{\code{superthin}}, which is a list of
+	\item{X }{ An object of class \dQuote{\code{stpp}}.}
 	\item{k }{ The super-thinning rate.}
 	\item{residuals }{ A data frame consisting of the x, y, and t coordinates of the super-thinned residuals.}
 	\item{super }{ A data frame consisting of the x, y, and t coordinates of the superposed points.}
@@ -71,15 +68,16 @@ Clements, R.A., Schoenberg, F.P., and Schorlemmer, D. (2011) Residual analysis m
 Robert Clements
 }
 \seealso{
-\code{\link{stpp}}, \code{\link{thinresid}}, \code{\link{supresid}}, \code{\link{spatstat}}
+\code{\link{stpp}}, \code{\link{thinresid}}, \code{\link{supresid}}, \code{spatstat}
 }
 \examples{
 #===> load simulated data <===#
-load(simdata)
+data(simdata)
 X <- stpp(simdata$x, simdata$y, simdata$t)
 
 #===> define conditional intensity function <===#
-ci1 <- function(X, theta){theta[1]*exp(-theta[2]*X$x - theta[3]*X$y - theta[4]*X$t)} #correct model
+ci1 <- function(X, theta){theta[1]*exp(-theta[2]*X$x - 
+theta[3]*X$y - theta[4]*X$t)} #correct model
 
 stresiduals1 <- superthin(X, ci1, theta = c(3000, 2, 2, 2), k = 250)
 stresiduals2 <- superthin(X, ci1, theta = c(2500, 5, 5, 10), k = 250)

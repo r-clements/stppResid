@@ -7,12 +7,14 @@ Print details of a \code{stgrid} object
 Prints a full spatial grid.
 }
 \usage{
-print.stgrid(x)
+\method{print}{stgrid}(x, \ldots)
 }
 \arguments{
   \item{x}{
-A \code{\dQuote{stgrid}} object.
+A \dQuote{\code{stgrid}} object.
 }
+  \item{\ldots}{
+  }
 }
 \author{
 Robert Clements

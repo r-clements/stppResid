@@ -4,14 +4,17 @@
 Plot a space-time point pattern
 }
 \description{
-Plot a space-time point pattern described by a \code{\dQuote{stpp}} object.
+Plot a space-time point pattern described by a \dQuote{\code{stpp}} object.
 }
 \usage{
-plot.stpp(X, pch = 1, asp = 1, ...)
+\method{plot}{stpp}(x, \ldots, pch = 1, asp = 1)
 }
 \arguments{
-  \item{X}{
-A \code{\dQuote{stpp}} object.
+  \item{x}{
+A \dQuote{\code{stpp}} object.
+}
+    \item{\ldots}{
+Arguments for use with \code{\link{plot}}.
 }
   \item{pch}{
 Character type for plotting the points.
@@ -19,11 +22,6 @@ Character type for plotting the points.
   \item{asp}{
 y/x aspect ratio.
 }
-  \item{\dots}{
-Arguments for use with \code{\link{plot}}.
-}
-}
-\details{
 }
 \author{
 Robert Clements

@@ -1,7 +1,5 @@
 \name{gridresid}
 \alias{gridresid}
-\alias{print.gridresid}
-\alias{plot.gridresid}
 \title{
 Calculate grid-based residuals
 }
@@ -9,11 +7,13 @@ Calculate grid-based residuals
 \code{gridresid} divides the space-time window into a grid of bins and calculates residuals within each bin for a specified conditional intensity model.
 }
 \usage{
-gridresid(X, cifunction, theta = NULL, lambda = NULL, grid = c(10, 10), gf = NULL, resid = c(\dQuote{raw}, \dQuote{pearson}, \dQuote{inverse}), algthm = c(\dQuote{mc}, \dQuote{miser}, \dQuote{none}), n = 100, n.miser = 10000, ints = NULL)
+gridresid(X, cifunction, theta = NULL, lambda = NULL, grid = c(10, 10), 
+gf = NULL, resid = c("raw", "pearson", "inverse"), algthm = 
+c("mc", "miser", "none"), n = 100, n.miser = 10000, ints = NULL)
 }
 \arguments{
   \item{X}{
-A \code{\dQuote{stpp}} object.
+A \dQuote{\code{stpp}} object.
 }
   \item{cifunction}{
 A function returning the value of the conditional intensity at all points in \code{X}. The function should take arguments \code{X} and an optional vector of parameters \code{theta}.
@@ -28,13 +28,13 @@ Optional: A vector of conditional intensities at each point in \code{X}.
 A vector representing the number of columns and rows in the grid.
 }
   \item{gf}{
-Optional: A \code{\dQuote{stgrid}} object.
+Optional: A \dQuote{\code{stgrid}} object.
 }
   \item{resid}{
-The residual type to be computed. The three types are \code{\dQuote{raw}}, \code{\dQuote{pearson}}, and \code{\dQuote{inverse}}.
+The residual type to be computed. The three types are \dQuote{\code{raw}}, \dQuote{\code{pearson}}, and \dQuote{\code{inverse}}.
 }
   \item{algthm}{
-The algorithm used for estimating the integrals in each grid cell. The three algorithms are \code{\dQuote{mc}}, \code{\dQuote{miser}}, and \code{\dQuote{none}}  
+The algorithm used for estimating the integrals in each grid cell. The three algorithms are \dQuote{\code{mc}}, \dQuote{\code{miser}}, and \dQuote{\code{none}}  
 }
   \item{n}{
 Initial number of sample points in each grid cell for approximating integrals. The number of sample points are iteratively increased by \code{n} until some accuracy threshold is reached.
@@ -69,14 +69,14 @@ The conditional intensity function, \code{cifunction}, should take \code{X} as t
 
 The integrals in \eqn{R(B_{i})} are approximated using one of two algorithms: a simple Monte Carlo (\code{mc}) algorithm, or the MISER algorithm. The simple Monte Carlo iteratively adds \code{n} sample points to each grid cell to approximate the integral, and the iteration stops when some threshold in the accuracy of the approximation is reached. The MISER algorithm samples a total number of \code{n.miser} points in a recursive way, sampling the points in locations that have the highest variance. This part can be very slow and the approximations can be very inaccurate. For highest accuracy these algorithms will require a very large \code{n} or \code{n.miser} depending on the complexity of the conditional intensity functions (some might say ~1 billion sample points are needed for a good approximation). Passing the argument \code{ints} eliminates the need for approximating the integrals using either of these two algorithms. 
 
-Passing \code{gf} will eliminate the need for \code{gridresid} to create a \code{\dQuote{stgrid}} object. If neither \code{grid} or \code{gf} is specified, the default \code{grid} is 10 by 10. 
+Passing \code{gf} will eliminate the need for \code{gridresid} to create a \dQuote{\code{stgrid}} object. If neither \code{grid} or \code{gf} is specified, the default \code{grid} is 10 by 10. 
 }
 \value{
 Prints to the screen the number of simulated points in each bin used to approximate the integrals.	
 	
-Outputs an object of class \code{\dQuote{gridresid}}, which is a list of
-	\item{X }{ An object of class \code{\dQuote{stpp}}.}
-	\item{grid }{ An object of class \code{\dQuote{stgrid}}.}
+Outputs an object of class \dQuote{\code{gridresid}}, which is a list of
+	\item{X }{ An object of class \dQuote{\code{stpp}}.}
+	\item{grid }{ An object of class \dQuote{\code{stgrid}}.}
 	\item{residuals }{ A vector of grid-based residuals. The order of the residuals corresponds with the order of the bins in \code{grid}.}
   \item{n}{Total number of points used for approximating all integrals.}
   \item{integral}{Vector of actual integral approximations in each grid cell.}
@@ -98,7 +98,7 @@ Robert Clements
 }
 \examples{
 #===> load simulated data <===#
-load(simdata)
+data(simdata)
 X <- stpp(simdata$x, simdata$y, simdata$t)
 
 #===> define two conditional intensity functions <===#

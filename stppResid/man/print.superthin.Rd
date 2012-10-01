@@ -7,12 +7,14 @@ Print details of a \code{superthin} object
 Prints the details of the results of finding super-thinned residuals for a space-time point process.
 }
 \usage{
-print.superthin(x)
+\method{print}{superthin}(x, \ldots)
 }
 \arguments{
   \item{x}{
-A \code{\dQuote{superthin}} object.
+A \dQuote{\code{superthin}} object.
 }
+  \item{\ldots}{
+  }
 }
 \details{
 Prints the details of the space-time dataset, the super-thinning rate, the super-thinned residuals, the simulated points, the automatically retained points, the retained points after thinning, and the removed points.

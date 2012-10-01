@@ -7,11 +7,16 @@ Plot tessellation residuals
 Plot an image of tessellation residuals for a space-time point process.
 }
 \usage{
-plot.tessresid(X, col.key = rev(heat.colors(100)), cutoffs = NULL, plot.smooth = FALSE, smooth.col = heat.colors, smooth.key = FALSE, contours = FALSE, nlevels = 20, ...)
+\method{plot}{tessresid}(x, \ldots, col.key = rev(heat.colors(100)), cutoffs = NULL, 
+plot.smooth = FALSE, smooth.col = heat.colors, smooth.key = FALSE, contours = 
+FALSE, nlevels = 20)
 }
 \arguments{
-  \item{X}{
-A \code{\dQuote{tessresid}} object.
+  \item{x}{
+A \dQuote{\code{tessresid}} object.
+}
+  \item{\ldots}{
+Arguments for use with \code{\link{points}}
 }
   \item{col.key}{
 A vector of colors in hexadecimal format.
@@ -34,14 +39,11 @@ If \code{TRUE}, contour lines will be plotted.
   \item{nlevels}{
 Number of partitions of the residuals to be plotted.
 }
-  \item{\dots}{
-Arguments for use with \code{\link{points}}
-}
 }
 \details{
-\code{cutoffs} must be a vector of increasing values of the same length as \code{col.key} plus 1. \code{cutoffs} divides the residual values in \code{X$residuals} into a number of intervals equal to the number of colors in \code{col.key}. The colors are assigned to the intervals in order, e.g. the first color in \code{col.key} will be plotted in the cells defined by the tessellation in \code{X$tile.list} that contains a residual that falls anywhere in the first interval (lower bound inclusive, upper bound exclusive).	
+\code{cutoffs} must be a vector of increasing values of the same length as \code{col.key} plus 1. \code{cutoffs} divides the residual values in \code{x$residuals} into a number of intervals equal to the number of colors in \code{col.key}. The colors are assigned to the intervals in order, e.g. the first color in \code{col.key} will be plotted in the cells defined by the tessellation in \code{x$tile.list} that contains a residual that falls anywhere in the first interval (lower bound inclusive, upper bound exclusive).	
 	
-Default \code{col.key} is a vector of 100 \code{heat} colors in reverse. Default \code{cutoffs} is a vector of 101 equally spaced points that range from the minimum residual in \code{X$residuals}, minus a very small number, to the maximum residual, plus a very small number.
+Default \code{col.key} is a vector of 100 \code{heat} colors in reverse. Default \code{cutoffs} is a vector of 101 equally spaced points that range from the minimum residual in \code{x$residuals}, minus a very small number, to the maximum residual, plus a very small number.
 }
 \author{
 Robert Clements
@@ -59,6 +61,7 @@ data(tsresiduals)
 plot(tsresiduals)
 
 hist(tsresiduals$residuals)
-cutoffs = c(seq(-1.07, -.51, length.out = 15), seq(-.5, .5, length.out=70), seq(.51, 2.42, length.out = 16))
+cutoffs = c(seq(-1.07, -.51, length.out = 15), seq(-.5, .5, length.out=70), 
+seq(.51, 2.42, length.out = 16))
 plot(tsresiduals, cutoffs = cutoffs)
 }

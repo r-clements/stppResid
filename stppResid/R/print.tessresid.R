@@ -1,4 +1,4 @@
-print.tessresid <- function(x)
+print.tessresid <- function(x, ...)
 {
 	print(x$X)
 	cat("Tessellation residuals:\n")	

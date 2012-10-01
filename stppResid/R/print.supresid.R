@@ -1,4 +1,4 @@
-print.supresid <- function(x)
+print.supresid <- function(x, ...)
 {
 	print(x$X)
 	cat("Superposition rate:\n")

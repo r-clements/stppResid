@@ -1,12 +1,10 @@
 \name{stpp}
 \alias{stpp}
-\alias{print.stpp}
-\alias{plot.stpp}
 \title{
 Convert data to class \code{stpp}
 }
 \description{
-\code{stpp} creates a space-time point pattern of class \code{\dQuote{stpp}} for use by the package \code{stppResid}.
+\code{stpp} creates a space-time point pattern of class \dQuote{\code{stpp}} for use by the package \code{stppResid}.
 }
 \usage{
 stpp(x, y, t, stw)
@@ -22,7 +20,7 @@ A vector of y coordinates.
 A vector of t coordinates.
 }
   \item{stw}{
-An object of class \code{\dQuote{stwin}}.
+An object of class \dQuote{\code{stwin}}.
 }
 }
 \details{

@@ -1,5 +1,6 @@
-plot.tessdev <- function(X, col.key = rev(heat.colors(100)), cutoffs = NULL, plot.smooth = FALSE, smooth.col = heat.colors, smooth.key = FALSE, contours = FALSE, nlevels = 20, ...)
+plot.tessdev <- function(x, ..., col.key = rev(heat.colors(100)), cutoffs = NULL, plot.smooth = FALSE, smooth.col = heat.colors, smooth.key = FALSE, contours = FALSE, nlevels = 20)
 {
+  X <- x
 	if(plot.smooth == FALSE) {
 		residuals <- X$residuals
 		if(is.null(cutoffs))	{

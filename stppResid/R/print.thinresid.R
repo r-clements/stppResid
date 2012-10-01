@@ -1,4 +1,4 @@
-print.thinresid <- function(x)
+print.thinresid <- function(x, ...)
 {
 	print(x$X)
 	cat("Thinning rate:\n")

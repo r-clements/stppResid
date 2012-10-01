@@ -7,11 +7,14 @@ Plot thinned residuals
 Plot thinned residuals for a space-time point process.
 }
 \usage{
-plot.thinresid(X, pch = 1, asp = 1, ...)
+\method{plot}{thinresid}(x, \ldots, pch = 1, asp = 1)
 }
 \arguments{
-  \item{X}{
-A \code{"thinresid"} object.
+  \item{x}{
+A \dQuote{\code{thinresid}} object.
+}
+  \item{\ldots}{
+Arguments for use with \code{\link{plot}}.
 }
   \item{pch}{
 Character type for plotting the points.
@@ -19,11 +22,6 @@ Character type for plotting the points.
   \item{asp}{
 y/x aspect ratio.
 }
-  \item{\dots}{
-Arguments for use with \code{\link{plot}}.
-}
-}
-\details{
 }
 \author{
 Robert Clements

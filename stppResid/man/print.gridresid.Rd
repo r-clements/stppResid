@@ -7,12 +7,14 @@ Print details of a \code{gridresid} object
 Prints the details of the results of finding grid-based residuals for a space-time point process.
 }
 \usage{
-print.gridresid(x)
+\method{print}{gridresid}(x, \ldots)
 }
 \arguments{
   \item{x}{
-A \code{\dQuote{gridresid}} object.
+A \dQuote{\code{gridresid}} object.
 }
+  \item{\ldots}{
+  }
 }
 \details{
 Prints the details of the space-time dataset, the grid-based residuals, and the spatial grid.

@@ -1,7 +1,5 @@
 \name{tessdev}
 \alias{tessdev}
-\alias{print.tessdev}
-\alias{plot.tessdev}
 \title{
 Calculate tessellation deviance residuals
 }
@@ -9,11 +7,14 @@ Calculate tessellation deviance residuals
 \code{tessdev} divides the space-time window into cells using a Voronoi tessellation and calculates the deviance residuals within each cell between two competing conditional intensity models.
 }
 \usage{
-tessdev(X, cifunction1, cifunction2, theta1 = NULL, theta2 = NULL, lambda1 = NULL, lambda2 = NULL, algthm1 = c(\dQuote{mc}, \dQuote{miser}, \dQuote{none}), algthm2 = c(\dQuote{mc}, \dQuote{miser}, \dQuote{none}), n = 100, n1.miser = 10000, n2.miser = 10000, ints1 = NULL, ints2 = NULL)
+tessdev(X, cifunction1, cifunction2, theta1 = NULL, theta2 = NULL, 
+lambda1 = NULL, lambda2 = NULL, algthm1 = c("mc", "miser", "none"), 
+algthm2 = c("mc", "miser", "none"), n = 100, n1.miser = 10000, 
+n2.miser = 10000, ints1 = NULL, ints2 = NULL)
 }
 \arguments{
   \item{X}{
-A \code{\dQuote{stpp}} object.
+A \dQuote{\code{stpp}} object.
 }
   \item{cifunction1}{
 A function returning estimates of the conditional intensity at all points in \code{X}, according to model 1 (\code{cifunction1}). The function should take arguments \code{X} and an optional vector of parameters \code{theta1}.
@@ -34,10 +35,10 @@ Optional: A vector of conditional intensities based on \code{cifunction1} at eac
 Optional: A vector of conditional intensities based on \code{cifunction2} at each point in \code{X}.
 }
   \item{algthm1}{
-The algorithm used for estimating the integrals in each cell for model 1. The three algorithms are \code{\dQuote{mc}}, \code{\dQuote{miser}}, and \code{\dQuote{none}}  
+The algorithm used for estimating the integrals in each cell for model 1. The three algorithms are \dQuote{\code{mc}}, \dQuote{\code{miser}}, and \dQuote{\code{none}}  
 }
     \item{algthm2}{
-The algorithm used for estimating the integrals in each cell for model 2. The three algorithms are \code{\dQuote{mc}}, \code{\dQuote{miser}}, and \code{\dQuote{none}}  
+The algorithm used for estimating the integrals in each cell for model 2. The three algorithms are \dQuote{\code{mc}}, \dQuote{\code{miser}}, and \dQuote{\code{none}}  
 }
   \item{n}{
 Initial number of sample points in each cell for approximating integrals. The number of sample points are iteratively increased by \code{n} until some accuracy threshold is reached.
@@ -66,18 +67,18 @@ The conditional intensity functions, \code{cifunction1} and \code{cifunction2}, 
 
 The integrals in \eqn{R_{TD}(V_{i})} are approximated using one of two algorithms: a simple Monte Carlo (\code{mc}) algorithm, or the MISER algorithm. The simple Monte Carlo iteratively adds \code{n} sample points to each tessellation cell to approximate the integral, and the iteration stops when some threshold in the accuracy of the approximation is reached. The MISER algorithm samples a total number of \code{n.miser} points in a recursive way, sampling the points in locations that have the highest variance. This part can be very slow and the approximations can be very inaccurate. For highest accuracy these algorithms will require a very large \code{n} or \code{n.miser} depending on the complexity of the conditional intensity functions (some might say ~1 billion sample points are needed for a good approximation). 
 
-Passing the arguments \code{ints1} and/or \code{ints2} eliminates the need for approximating the integrals using either of the two algorithms here. However, the \code{tile.list} must first be obtained in order to assure that each element of \code{ints1} and/or \code{ints2} corresponds to the correct cell. The \code{tile.list} can be obtained, either by using the \code{deldir} function separately, or by using \code{tessresid} with one of the included algorithms first (the \code{tile.list} is returned along with the residuals). \code{tessresid} can then be called again with \code{ints1} and/or \code{ints2} included and \code{algthm = \dQuote{none}}.
+Passing the arguments \code{ints1} and/or \code{ints2} eliminates the need for approximating the integrals using either of the two algorithms here. However, the \code{tile.list} must first be obtained in order to assure that each element of \code{ints1} and/or \code{ints2} corresponds to the correct cell. The \code{tile.list} can be obtained, either by using the \code{deldir} function separately, or by using \code{tessresid} with one of the included algorithms first (the \code{tile.list} is returned along with the residuals). \code{tessresid} can then be called again with \code{ints1} and/or \code{ints2} included and \code{algthm} = \dQuote{\code{none}}.
 
 Note that if \code{miser} is selected, and if the points in the point pattern are very densely clustered, the integral in some cells may end up being approximated based on only the observed point in the point pattern that is contained in that cell. This happens because the cells in these clusters of points will be very small, and so it may be likely that sampled points based on the MISER algorithm will miss these cells entirely. For this reason, the simple Monte Carlo algorithm might be preferred. 
 }
 \value{
 Prints to the screen the number of simulated points used to approximate the integrals.
 
-Outputs an object of class \code{\dQuote{tessdev}}, which is a list of
-	\item{X }{ An object of class \code{\dQuote{stpp}}.}
-	\item{tile.list }{ An object of class \code{\dQuote{tile.list}}.}
+Outputs an object of class \dQuote{\code{tessdev}}, which is a list of
+	\item{X }{ An object of class \dQuote{\code{stpp}}.}
+	\item{tile.list }{ An object of class \dQuote{\code{tile.list}}.}
 	\item{residuals }{ A vector of tessellation deviance residuals. The order of the residuals corresponds with the order of the cells (tiles) in \code{tile.list}.}
-If \code{algthm = \dQuote{mc}}, then a list of the following elements are also included for each model that uses the \code{mc} algorithm: 
+If \code{algthm} = \dQuote{\code{mc}}, then a list of the following elements are also included for each model that uses the \code{mc} algorithm: 
   \item{n }{ Vector of the total number of points used for approximating integrals.}
   \item{integral}{Vector of actual integral approximations in each grid cell.}
   \item{mean.lambda}{Vector of the approximate final mean of lambda in each grid cell.}
@@ -89,8 +90,6 @@ If the \code{miser} algorithm is selected, then a list of the following elements
   \item{sd.lambda }{ Vector of the approximate standard deviation of lambda in each grid cell.}
   \item{app.pts }{ A data frame of the x,y, and t coordinates of a sample of 10,000 of the sampled points for integral approximation, along with the value of lambda (l).}
 }
-\references{
-}
 \author{
 Robert Clements
 }
@@ -99,7 +98,7 @@ Robert Clements
 }
 \examples{
 #===> load simulated data <===#
-load(simdata)
+data(simdata)
 X <- stpp(simdata$x, simdata$y, simdata$t)
 
 #===> define two conditional intensity functions <===#

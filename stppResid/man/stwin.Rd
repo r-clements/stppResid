@@ -4,7 +4,7 @@
 Create a space-time window
 }
 \description{
-\code{stwin} creates an object of class \code{\dQuote{stwin}} representing a three-dimensional space-time window.
+\code{stwin} creates an object of class \dQuote{\code{stwin}} representing a three-dimensional space-time window.
 }
 \usage{
 stwin(xcoord = c(0, 1), ycoord = c(0, 1), tcoord = c(0, 1))
@@ -21,14 +21,14 @@ A vector of t coordinate limits.
 }
 }
 \details{
-To create a space-time point process object of class \code{\dQuote{stpp}}, an enclosing space-time window of class \code{\dQuote{stwin}} must be created and passed to \code{\link{stpp}}.
+To create a space-time point process object of class \dQuote{\code{stpp}}, an enclosing space-time window of class \dQuote{\code{stwin}} must be created and passed to \code{\link{stpp}}.
 
 The window must be box shaped. Each vector of coordinates must be of length two and ordered from smallest to largest. Every combination of the entries of the three vectors represents the 8 corners of the space-time window.
 
 If no coordinates are given, the default is a unit cube.
 }
 \value{
-Outputs an object of class \code{\dQuote{stwin}} describing a three-dimensional space-time cuboid, which is a list of
+Outputs an object of class \dQuote{\code{stwin}} describing a three-dimensional space-time cuboid, which is a list of
 	\item{xcoord }{ A vector of x limits.}
 	\item{ycoord }{ A vector of y limits.}
 	\item{tcoord }{ A vector of t limits.}

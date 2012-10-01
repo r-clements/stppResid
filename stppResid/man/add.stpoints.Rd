@@ -9,7 +9,7 @@ add.stpoints(X, points)
 }
 \arguments{
   \item{X}{
-A space-time object of class \code{\dQuote{stpp}} to add points to.
+A space-time object of class \dQuote{\code{stpp}} to add points to.
 }
   \item{points}{
 A vector, data frame, matrix or list of points to be added to \code{X}. 
@@ -19,7 +19,7 @@ A vector, data frame, matrix or list of points to be added to \code{X}.
 \code{points} can be a vector of length three describing one x, y, and t coordinate, or a matrix or data frame where the first column is a column of x coordinates, the second column is a column of y coordinates, and the third column is a column of t coordinates.  If \code{points} is a list, the first entry is a vector of x coordinates, the second entry is a vector of y coordinates, and the third entry is a vector of t coordinates.   
 }
 \value{
-\code{add.stpoints} returns an object of class \code{\dQuote{stpp}}.
+\code{add.stpoints} returns an object of class \dQuote{\code{stpp}}.
 }
 \author{
 Robert Clements

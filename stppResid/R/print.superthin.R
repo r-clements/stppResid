@@ -1,4 +1,4 @@
-print.superthin <- function(x)
+print.superthin <- function(x, ...)
 {
 	print(x$X)
 	cat("Super-thin rate:\n")

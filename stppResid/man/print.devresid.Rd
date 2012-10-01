@@ -7,12 +7,14 @@ Print details of a \code{devresid} object
 Prints the details of the results of finding deviance residuals for a space-time point process.
 }
 \usage{
-print.devresid(x)
+\method{print}{devresid}(x, \ldots)
 }
 \arguments{
   \item{x}{
-A \code{\dQuote{devresid}} object.
+A \dQuote{\code{devresid}} object.
 }
+  \item{\ldots}{
+  }
 }
 \details{
 Prints the details of the space-time dataset, the deviance residuals, and the spatial grid.

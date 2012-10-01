@@ -1,7 +1,5 @@
 \name{tessresid}
 \alias{tessresid}
-\alias{print.tessresid}
-\alias{plot.tessresid}
 \title{
 Calculate tessellation residuals
 }
@@ -9,11 +7,12 @@ Calculate tessellation residuals
 \code{tessresid} divides the space-time window into bins using a Voronoi tessellation and calculates residuals within each bin for a specified conditional intensity model.
 }
 \usage{
-tessresid(X, cifunction, theta = NULL, algthm = c("mc", "miser", "none"), n = 100, n.miser = 10000, ints = NULL)
+tessresid(X, cifunction, theta = NULL, algthm = c("mc", "miser", "none"), 
+n = 100, n.miser = 10000, ints = NULL)
 }
 \arguments{
   \item{X}{
-A \code{\dQuote{stpp}} object.
+A \dQuote{\code{stpp}} object.
 }
   \item{cifunction}{
 A function returning the value of the conditional intensity at all points in \code{X}. The function should take arguments \code{X} and an optional vector of parameters \code{theta}.
@@ -22,7 +21,7 @@ A function returning the value of the conditional intensity at all points in \co
 Optional: A vector of parameters to be passed to \code{cifunction}.
 }
   \item{algthm}{
-The algorithm used for estimating the integrals in each tessellation cell. The three algorithms are \code{\dQuote{mc}}, \code{\dQuote{miser}}, and \code{\dQuote{none}}  
+The algorithm used for estimating the integrals in each tessellation cell. The three algorithms are \dQuote{\code{mc}}, \dQuote{\code{miser}}, and \dQuote{\code{none}}  
 }
   \item{n}{
 Initial number of sample points in each grid tessellation for approximating integrals. The number of sample points are iteratively increased by \code{n} until some accuracy threshold is reached.
@@ -45,14 +44,14 @@ The conditional intensity function, \code{cifunction}, should take \code{X} as t
 
 The integrals in \eqn{R_{T}(V_{i})} are approximated using one of two algorithms: a simple Monte Carlo (\code{mc}) algorithm, or the MISER algorithm. The simple Monte Carlo iteratively adds \code{n} sample points to each tessellation cell to approximate the integral, and the iteration stops when some threshold in the accuracy of the approximation is reached. The MISER algorithm samples a total number of \code{n.miser} points in a recursive way, sampling the points in locations that have the highest variance. This part can be very slow and the approximations can be very inaccurate. For highest accuracy these algorithms will require a very large \code{n} or \code{n.miser} depending on the complexity of the conditional intensity functions (some might say ~1 billion sample points are needed for a good approximation). 
 
-Passing the argument \code{ints} eliminates the need for approximating the integrals using either of the two algorithms here. However, the \code{tile.list} must first be obtained in order to assure that each element of \code{ints} corresponds to the correct cell. The \code{tile.list} can be obtained, either by using the \code{deldir} function separately, or by using \code{tessresid} with one of the included algorithms first (the \code{tile.list} is returned along with the residuals). \code{tessresid} can then be called again with \code{ints} included and \code{algthm = \dQuote{none}}.
+Passing the argument \code{ints} eliminates the need for approximating the integrals using either of the two algorithms here. However, the \code{tile.list} must first be obtained in order to assure that each element of \code{ints} corresponds to the correct cell. The \code{tile.list} can be obtained, either by using the \code{deldir} function separately, or by using \code{tessresid} with one of the included algorithms first (the \code{tile.list} is returned along with the residuals). \code{tessresid} can then be called again with \code{ints} included and \code{algthm} = \dQuote{\code{none}}.
 
 Note that if \code{miser} is selected, and if the points in the point pattern are very densely clustered, the integral in some cells may end up being approximated based on only the observed point in the point pattern that is contained in that cell. This happens because the cells in these clusters of points will be very small, and so it may be likely that sampled points based on the MISER algorithm will miss these cells entirely. For this reason, the simple Monte Carlo algorithm might be preferred. 
 }
 \value{
-Outputs an object of class \code{\dQuote{tessresid}}, which is a list of
-	\item{X }{ An object of class \code{\dQuote{stpp}}.}
-	\item{tile.list }{ An object of type \code{\dQuote{tile.list}}, which is itself a list with one entry for each point in \code{X}. Each entry is a list of
+Outputs an object of class \dQuote{\code{tessresid}}, which is a list of
+	\item{X }{ An object of class \dQuote{\code{stpp}}.}
+	\item{tile.list }{ An object of type \dQuote{\code{tile.list}}, which is itself a list with one entry for each point in \code{X}. Each entry is a list of
   
 pt: x and y coordinates of the point.
 
@@ -60,8 +59,6 @@ x: x coordinates of the vertices of the tessellation cell.
     
 y: y coordinates of the vertices of the tessellation cell.} 
 	\item{residuals }{ A vector of tessellation residuals. The order of the residuals corresponds with the order of the cells in \code{tile.list}.}
-}
-\references{
 }
 \author{
 Robert Clements
@@ -71,7 +68,7 @@ Robert Clements
 }
 \examples{
 #===> load simulated data <===#
-load(simdata)
+data(simdata)
 X <- stpp(simdata$x, simdata$y, simdata$t)
 
 #===> define two conditional intensity functions <===#

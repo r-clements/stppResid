@@ -1,4 +1,4 @@
-print.stwin <- function(x)
+print.stwin <- function(x, ...)
 {
 	cat("Space-time window\n")
 	cat("x-range: ")

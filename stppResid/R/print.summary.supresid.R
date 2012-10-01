@@ -1,7 +1,7 @@
-print.summary.supresid <- function(X)
+print.summary.supresid <- function(x, ...)
 {
-	cat("Superposition rate: ", X$k, "\n")
-	cat("Number of residuals: ", X$n, "\n")
-	cat("Expected number of residuals: ", X$n.exp, "\n")
-	cat("One-tailed p-value: ", X$p.val)
+	cat("Superposition rate: ", x$k, "\n")
+	cat("Number of residuals: ", x$n, "\n")
+	cat("Expected number of residuals: ", x$n.exp, "\n")
+	cat("One-tailed p-value: ", x$p.val)
 }

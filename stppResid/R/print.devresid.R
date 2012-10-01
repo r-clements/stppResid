@@ -1,4 +1,4 @@
-print.devresid <- function(x)
+print.devresid <- function(x, ...)
 {
 	print(x$X)
 	cat("Residuals:\n")

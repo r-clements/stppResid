@@ -7,11 +7,14 @@ Plot superposed residuals
 Plot superposed residuals for a space-time point process.
 }
 \usage{
-plot.supresid(X, pch1 = 1, pch2 = 3, asp = 1, ...)
+\method{plot}{supresid}(x, \ldots, pch1 = 1, pch2 = 3, asp = 1)
 }
 \arguments{
-  \item{X}{
-A \code{\dQuote{supresid}} object.
+  \item{x}{
+A \dQuote{\code{supresid}} object.
+}
+    \item{\ldots}{
+Arguments for use with \code{\link{plot}}.
 }
   \item{pch1}{
 Character type for plotting the original data points.
@@ -21,9 +24,6 @@ Character type for plotting the simulated points.
 }
   \item{asp}{
 y/x aspect ratio.
-}
-  \item{\dots}{
-Arguments for use with \code{\link{plot}}.
 }
 }
 \details{

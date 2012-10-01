@@ -7,15 +7,17 @@ Summary of a set of superposed residuals
 Outputs and prints a summary of a set of superposed residuals.
 }
 \usage{
-summary.supresid(X)
+\method{summary}{supresid}(object, \ldots)
 }
 \arguments{
-  \item{X}{
-A \code{\dQuote{supresid}} object.
+  \item{object}{
+A \dQuote{\code{supresid}} object.
 }
+  \item{\ldots}{
+  }
 }
 \details{
-Outputs and prints a summary of \code{X}.
+Outputs and prints a summary of \code{supresid} object.
 
 Printed to the screen are the superposition rate, \code{k}, the number of superposed residuals, \code{n}, the expected number of residuals, \code{n.exp}, and the p-value for observing \code{n} residuals (\code{p.val}).
 }

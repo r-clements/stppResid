@@ -7,11 +7,14 @@ Plot super-thinned residuals
 Plot super-thinned residuals for a space-time point process.
 }
 \usage{
-plot.superthin(X, pch1 = 1, pch2 = 3, asp = 1, ...)
+\method{plot}{superthin}(x, \ldots, pch1 = 1, pch2 = 3, asp = 1)
 }
 \arguments{
-  \item{X}{
-A \code{\dQuote{superthin}} object.
+  \item{x}{
+A \dQuote{\code{superthin}} object.
+}
+    \item{\ldots}{
+Arguments for use with \code{\link{plot}}.
 }
   \item{pch1}{
 Character type for plotting the retained points from the original data set.
@@ -21,9 +24,6 @@ Character type for plotting the simulated points.
 }
   \item{asp}{
 y/x aspect ratio.
-}
-  \item{\dots}{
-Arguments for use with \code{\link{plot}}.
 }
 }
 \details{

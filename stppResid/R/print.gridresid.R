@@ -1,4 +1,4 @@
-print.gridresid <- function(x)
+print.gridresid <- function(x, ...)
 {
 	print(x$X)
 	cat("Residuals:\n")

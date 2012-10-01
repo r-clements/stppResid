@@ -7,15 +7,17 @@ Summary of a set of super-thinned residuals
 Outputs and prints a summary of a set of super-thinned residuals.
 }
 \usage{
-summary.superthin(X)
+\method{summary}{superthin}(object, \ldots)
 }
 \arguments{
-  \item{X}{
-A \code{\dQuote{superthin}} object.
+  \item{object}{
+A \dQuote{\code{superthin}} object.
 }
+  \item{\ldots}{
+  }
 }
 \details{
-Outputs and prints a summary of \code{X}.
+Outputs and prints a summary of the \code{superthin} object.
 
 Printed to the screen are the super-thinning rate, \code{k}, the number of super-thinned residuals, \code{n}, the expected number of residuals, \code{n.exp}, and the p-value for observing \code{n} residuals (\code{p.val}).
 }

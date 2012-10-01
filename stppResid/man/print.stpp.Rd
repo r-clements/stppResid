@@ -7,12 +7,14 @@ Print details of a \code{stpp} object
 Prints the x, y, and t coordinates of a space-time dataset, and prints the limits of the space-time window.
 }
 \usage{
-print.stpp(X)
+\method{print}{stpp}(x, \ldots)
 }
 \arguments{
-  \item{X}{
-A \code{\dQuote{stpp}} object.
+  \item{x}{
+A \dQuote{\code{stpp}} object.
 }
+  \item{\ldots}{
+  }
 }
 \author{
 Robert Clements

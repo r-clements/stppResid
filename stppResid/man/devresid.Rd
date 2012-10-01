@@ -1,7 +1,5 @@
 \name{devresid}
 \alias{devresid}
-\alias{print.devresid}
-\alias{plot.devresid}
 \title{
 Calculate deviance residuals
 }
@@ -9,11 +7,14 @@ Calculate deviance residuals
 \code{devresid} divides the space-time window into a grid of bins and calculates the deviance residuals within each bin between two competing conditional intensity models.
 }
 \usage{
-devresid(X, cifunction1, cifunction2, theta1 = NULL, theta2 = NULL, lambda1 = NULL, lambda2 = NULL, grid = c(10, 10), gf = NULL, algthm1 = c(\dQuote{mc}, \dQuote{miser}, \dQuote{none}), algthm2 = c(\dQuote{mc}, \dQuote{miser}, \dQuote{none}), n = 100, n1.miser = 10000, n2.miser = 10000, ints1 = NULL, ints2 = NULL)
+devresid(X, cifunction1, cifunction2, theta1 = NULL, theta2 = NULL, 
+lambda1 = NULL, lambda2 = NULL, grid = c(10, 10), gf = NULL, algthm1 = 
+c("mc", "miser", "none"), algthm2 = c("mc", "miser", "none"), 
+n = 100, n1.miser = 10000, n2.miser = 10000, ints1 = NULL, ints2 = NULL)
 }
 \arguments{
   \item{X}{
-A \code{\dQuote{stpp}} object.
+A \dQuote{\code{stpp}} object.
 }
   \item{cifunction1}{
 A function returning estimates of the conditional intensity at all points in \code{X}, according to model 1 (\code{cifunction1}). The function should take arguments \code{X} and an optional vector of parameters \code{theta1}.
@@ -37,13 +38,13 @@ Optional: A vector of conditional intensities based on \code{cifunction2} at eac
 A vector representing the number of columns and rows in the grid.
 }
   \item{gf}{
-Optional: A \code{\dQuote{stgrid}} object.
+Optional: A \dQuote{\code{stgrid}} object.
 }
   \item{algthm1}{
-The algorithm used for estimating the integrals in each grid cell for model 1. The three algorithms are \code{\dQuote{mc}}, \code{\dQuote{miser}}, and \code{\dQuote{none}}  
+The algorithm used for estimating the integrals in each grid cell for model 1. The three algorithms are \dQuote{\code{mc}}, \dQuote{\code{miser}}, and \dQuote{\code{none}}.  
 }
     \item{algthm2}{
-The algorithm used for estimating the integrals in each grid cell for model 2. The three algorithms are \code{\dQuote{mc}}, \code{\dQuote{miser}}, and \code{\dQuote{none}}  
+The algorithm used for estimating the integrals in each grid cell for model 2. The three algorithms are \dQuote{\code{mc}}, \dQuote{\code{miser}}, and \dQuote{\code{none}}.  
 }
   \item{n}{
 Initial number of sample points in each grid cell for approximating integrals. The number of sample points are iteratively increased by \code{n} until some accuracy threshold is reached.
@@ -72,14 +73,14 @@ The conditional intensity functions, \code{cifunction1} and \code{cifunction2}, 
 
 The integrals in \eqn{R(B_{i})} are approximated using one of two algorithms: a simple Monte Carlo (\code{mc}) algorithm, or the \code{miser} algorithm. The simple Monte Carlo iteratively adds \code{n} sample points to each grid cell to approximate the integral, and the iteration stops when some threshold in the accuracy of the approximation is reached. The MISER algorithm samples a total number of \code{n1.miser} and/or \code{n2.miser} points in a recursive way, sampling the points in locations that have the highest variance. This part can be very slow and the approximations can be very inaccurate. For highest accuracy these algorithms will require a very large \code{n} or \code{n1.miser}/\code{n2.miser} depending on the complexity of the conditional intensity functions (some might say ~1 billion sample points are needed for a good approximation). Passing the argument \code{ints1} and/or \code{ints2} eliminates the need for approximating the integrals using either of these two algorithms. 
 
-Passing \code{gf} will eliminate the need for \code{devresid} to create a \code{\dQuote{stgrid}} object. If neither \code{grid} or \code{gf} is specified, the default \code{grid} is 10 by 10. 
+Passing \code{gf} will eliminate the need for \code{devresid} to create a \dQuote{\code{stgrid}} object. If neither \code{grid} or \code{gf} is specified, the default \code{grid} is 10 by 10. 
 }
 \value{
 Prints to the screen the number of simulated points used to approximate the integrals.
 
-Outputs an object of class \code{\dQuote{devresid}}, which is a list of
-	\item{X }{ An object of class \code{\dQuote{stpp}}.}
-	\item{grid }{ An object of class \code{\dQuote{stgrid}}.}
+Outputs an object of class \dQuote{\code{devresid}}, which is a list of
+	\item{X }{ An object of class \dQuote{\code{stpp}}.}
+	\item{grid }{ An object of class \dQuote{\code{stgrid}}.}
 	\item{residuals }{ A vector of deviance residuals. The order of the residuals corresponds with the order of the bins in \code{grid}.}
 The following elements are named by model number, e.g. n.1, n.2, integral.1, integral.2, etc..
   \item{n}{Total number of points used for approximating all integrals.}
@@ -102,7 +103,7 @@ Robert Clements
 }
 \examples{
 #===> load simulated data <===#
-load(simdata)
+data(simdata)
 X <- stpp(simdata$x, simdata$y, simdata$t)
 
 #===> define two conditional intensity functions <===#

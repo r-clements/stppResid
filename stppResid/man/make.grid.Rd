@@ -11,7 +11,7 @@ make.grid(stw, grid = c(10, 10))
 }
 \arguments{
   \item{stw}{
-A space-time window object of class \code{\dQuote{stwin}} to be divided into space-time bins.
+A space-time window object of class \dQuote{\code{stwin}} to be divided into space-time bins.
 }
   \item{grid}{
 A vector representing the number of rows and columns in the grid.
@@ -23,7 +23,7 @@ The space-time window, \code{stw}, is divided into a grid of space-time bins usi
 If \code{grid} is not specified, the default grid is 10 x 10, resulting in 100 total bins.
 }
 \value{
-Outputs an object of class \code{\dQuote{stgrid}}, which is a list of
+Outputs an object of class \dQuote{\code{stgrid}}, which is a list of
 	\item{grid.full }{ A data frame where each row represents a bin. There are four columns, \code{xmin}, \code{xmax}, \code{ymin}, and \code{ymax}, which represent the x and y limits of the bins.}
 }
 \author{

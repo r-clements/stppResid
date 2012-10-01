@@ -1,4 +1,4 @@
-print.tessdev <- function(x)
+print.tessdev <- function(x, ...)
 {
 	print(x$X)
 	cat("Tessellation deviance residuals:\n")	

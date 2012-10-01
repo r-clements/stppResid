@@ -7,12 +7,14 @@ Print details of a \code{supresid} object
 Prints the details of the results of finding superposed residuals for a space-time point process.
 }
 \usage{
-print.supresid(x)
+\method{print}{supresid}(x, \ldots)
 }
 \arguments{
   \item{x}{
-A \code{\dQuote{supresid}} object.
+A \dQuote{\code{supresid}} object.
 }
+  \item{\ldots}{
+  }
 }
 \details{
 Prints the details of the space-time dataset, the superposition rate, the superposed residuals, and the simulated points.

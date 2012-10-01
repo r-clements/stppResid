@@ -7,12 +7,14 @@ Print details of a \code{thinresid} object
 Prints the details of the results of finding thinned residuals for a space-time point process.
 }
 \usage{
-print.thinresid(x)
+\method{print}{thinresid}(x, \ldots)
 }
 \arguments{
   \item{x}{
-A \code{\dQuote{thinresid}} object.
+A \dQuote{\code{thinresid}} object.
 }
+  \item{\ldots}{
+  }
 }
 \details{
 Prints the details of the space-time dataset, the thinning rate, the thinned residuals, and the removed points.

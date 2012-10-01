@@ -1,7 +1,7 @@
-plot.devresid <- function(X, col.key = rev(heat.colors(100)), cutoffs = NULL, plot.smooth = FALSE, smooth.col = heat.colors, smooth.key = FALSE, contours = FALSE, nlevels = 20, ...)
+plot.devresid <- function(x, ..., col.key = rev(heat.colors(100)), cutoffs = NULL, plot.smooth = FALSE, smooth.col = heat.colors, smooth.key = FALSE, contours = FALSE, nlevels = 20)
 {
 	if(plot.smooth == FALSE) {
-		residuals <- X$residuals
+		residuals <- x$residuals
 		if(is.null(cutoffs)) {	
 			cutoff.key <- seq(min(residuals) - 1e-09, max(residuals) + 1e-09, length.out = length(col.key)+1)
 		}
@@ -12,7 +12,7 @@ plot.devresid <- function(X, col.key = rev(heat.colors(100)), cutoffs = NULL, pl
 		}
 		if(!is.character(col.key))
 			stop("col.key must be character vector of colors in hexadecimal")
-		gr <- X[[2]]$grid.full
+		gr <- x[[2]]$grid.full
 		xv <- c(unique(gr$xmin), tail(gr$xmax, 1))
 		yv <- c(unique(gr$ymin), tail(gr$ymax, 1))
 		z <- matrix(residuals, nrow = length(xv) - 1, byrow = TRUE)
@@ -25,7 +25,7 @@ plot.devresid <- function(X, col.key = rev(heat.colors(100)), cutoffs = NULL, pl
 		else { 
 			image(xv, yv, z, xlab = "x", ylab = "y", col=col.key, breaks = cutoffs)
 		}
-		points(X[[1]]$x, X[[1]]$y, ...)	
+		points(x[[1]]$x, x[[1]]$y, ...)	
 		par(mar=c(1, 1, 1.5, 1))
 		key <- (0:length(residuals))/length(residuals)
 		plot(NULL, ylim=c(-3,0), xlim=c(-0.2, 1.2), type="n", axes=F, xlab="", ylab="", main="")
@@ -38,20 +38,20 @@ plot.devresid <- function(X, col.key = rev(heat.colors(100)), cutoffs = NULL, pl
 		text(1, -2.5, round(max(cutoff.key), 3), cex=1)
 		mtext("Deviance residuals", 3)	
 	} else {
-		gr <- X[[2]]$grid.full
+		gr <- x[[2]]$grid.full
 		xave <- (gr[,1] + gr[,2])/2
 		yave <- (gr[,3] + gr[,4])/2
 		xl <- sort(unique(xave)) 
 		yl <- sort(unique(yave))
-		z <- matrix(X$residuals, nrow = length(xl), byrow = TRUE)
+		z <- matrix(x$residuals, nrow = length(xl), byrow = TRUE)
 		dev.new()
 		if(smooth.key == FALSE) {
-			filled.contour2(xl, yl, z, xlab = "x", ylab = "y", nlevels = nlevels, color.palette = smooth.col, plot.axes = {axis(1); axis(2); points(X[[1]]$x, X[[1]]$y, ...)}) 
+			filled.contour2(xl, yl, z, xlab = "x", ylab = "y", nlevels = nlevels, color.palette = smooth.col, plot.axes = {axis(1); axis(2); points(x[[1]]$x, x[[1]]$y, ...)}) 
 			if(contours == TRUE) {
 				contour(xl,yl,z,add=T)
 			} 
 		} else {
-			filled.contour(xl, yl, z, xlab = "x", ylab = "y", nlevels = nlevels, color.palette = smooth.col, plot.axes = {axis(1); axis(2); points(X[[1]]$x, X[[1]]$y, ...)})
+			filled.contour(xl, yl, z, xlab = "x", ylab = "y", nlevels = nlevels, color.palette = smooth.col, plot.axes = {axis(1); axis(2); points(x[[1]]$x, x[[1]]$y, ...)})
 		}
 	}
 }

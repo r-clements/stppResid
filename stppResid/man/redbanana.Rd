@@ -16,12 +16,8 @@ Spatial locations and birth times of 788 red banana plants. Locations given in l
     \item{\code{birth}}{a numeric vector}
   }
 }
-\details{
-}
 \source{
 Balderama, E., Schoenberg, F.P., Murray, E., and Rundel, P.W. (2012) Application of branching point process models to the study of invasive red banana plants in Costa Rica. \emph{Journal of the American Statistical Association,} to appear. 
-}
-\references{
 }
 \examples{
 data(redbanana)

@@ -1,8 +1,9 @@
-summary.supresid <- function(X)
+summary.supresid <- function(object, ...)
 {
-	k <- X$k
-	n <- nrow(X$residuals)
-	vol <- diff(X[[1]]$xcoord) * diff(X[[1]]$ycoord) * diff(X[[1]]$tcoord)
+  x <- object
+	k <- x$k
+	n <- nrow(x$residuals)
+	vol <- diff(x[[1]]$xcoord) * diff(x[[1]]$ycoord) * diff(x[[1]]$tcoord)
 	n.exp <- k * vol
 	if(n < n.exp)
 		p.val <- ppois(n, n.exp) 

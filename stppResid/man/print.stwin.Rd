@@ -7,12 +7,14 @@ Print details of a \code{stwin} object
 Prints the details of a space-time window.
 }
 \usage{
-print.stwin(x)
+\method{print}{stwin}(x, \ldots)
 }
 \arguments{
   \item{x}{
-A \code{\dQuote{stwin}} object.
+A \dQuote{\code{stwin}} object.
 }
+  \item{\ldots}{
+  }
 }
 \author{
 Robert Clements
