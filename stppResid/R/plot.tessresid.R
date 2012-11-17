@@ -1,4 +1,4 @@
-plot.tessresid <- function(x, ..., col.key = rev(heat.colors(100)), cutoffs = NULL, plot.smooth = FALSE, smooth.col = heat.colors, smooth.key = FALSE, contours = FALSE, nlevels = 20)
+plot.tessresid <- function(x, ..., col.key = rev(heat.colors(100)), cutoffs = NULL, plot.smooth = FALSE, smooth.col = heat.colors, nlevels = 20)
 {
   X <- x
 	if(plot.smooth == FALSE) {
@@ -66,13 +66,6 @@ plot.tessresid <- function(x, ..., col.key = rev(heat.colors(100)), cutoffs = NU
 		}
 		zlambs <- matrix(lambs, nrow = length(xave), byrow = TRUE)
 		dev.new()
-		if(smooth.key == FALSE) {
-			filled.contour2(xave, yave, zlambs, xlab = "x", ylab = "y", nlevels = nlevels, color.palette = smooth.col, plot.axes = {axis(1); axis(2); points(X[[1]]$x, X[[1]]$y, ...)}) 
-			if(contours == TRUE) {
-				contour(xave, yave, zlambs, add=T)
-			}
-		} else {
-			filled.contour(xave, yave, zlambs, xlab = "x", ylab = "y", nlevels = nlevels, color.palette = smooth.col, plot.axes = {axis(1); axis(2); points(X[[1]]$x, X[[1]]$y, ...)})
-		}
+		filled.contour(xave, yave, zlambs, xlab = "x", ylab = "y", nlevels = nlevels, color.palette = smooth.col, plot.axes = {axis(1); axis(2); points(X[[1]]$x, X[[1]]$y, ...)})
 	}
 }

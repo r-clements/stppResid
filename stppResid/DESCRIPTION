@@ -8,4 +8,4 @@ Maintainer: Robert Clements <rclements17@gmail.com>
 Description: Implement transformation-based and pixel-based residual analysis of spatial-temporal point process models.
 License: GPL (>=2)
 LazyLoad: yes
-Depends: deldir, splancs
+Depends: deldir, splancs, cubature

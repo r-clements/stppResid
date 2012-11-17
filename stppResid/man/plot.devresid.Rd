@@ -8,8 +8,7 @@ Plot an image of deviance residuals for a space-time point process.
 }
 \usage{
 \method{plot}{devresid}(x, \ldots, col.key = rev(heat.colors(100)), cutoffs = NULL, 
-plot.smooth = FALSE, smooth.col = heat.colors, smooth.key = FALSE, contours = 
-FALSE, nlevels = 20)
+plot.smooth = FALSE, smooth.col = heat.colors, nlevels = 20)
 }
 \arguments{
   \item{x}{
@@ -29,12 +28,6 @@ Plot a smoothed version of the residuals.
 }
   \item{smooth.col}{
 A vector of colors in hexadecimal format.
-}
-  \item{smooth.key}{
-If \code{TRUE}, a color key will be plotted.  
-}
-  \item{contours}{
-If \code{TRUE}, contour lines will be plotted.  
 }
   \item{nlevels}{
 Number of partitions of the residuals to be plotted.
@@ -64,5 +57,5 @@ hist(deviance$residuals)
 cutoffs <- c(seq(-1.55, 2, length.out = 85), seq(2.01, 8.7, length.out = 16))
 plot(deviance, cutoffs = cutoffs)
 
-plot(deviance, plot.smooth = TRUE, contours = TRUE)
+plot(deviance, plot.smooth = TRUE)
 }

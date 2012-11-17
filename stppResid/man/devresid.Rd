@@ -9,8 +9,9 @@ Calculate deviance residuals
 \usage{
 devresid(X, cifunction1, cifunction2, theta1 = NULL, theta2 = NULL, 
 lambda1 = NULL, lambda2 = NULL, grid = c(10, 10), gf = NULL, algthm1 = 
-c("mc", "miser", "none"), algthm2 = c("mc", "miser", "none"), 
-n = 100, n1.miser = 10000, n2.miser = 10000, ints1 = NULL, ints2 = NULL)
+c("cubature", "mc", "miser", "none"), algthm2 = c("cubature", "mc", "miser", "none"), 
+n = 100, n1.miser = 10000, n2.miser = 10000, tol = 1e-05, maxEval = 0, 
+absError = 0, ints1 = NULL, ints2 = NULL)
 }
 \arguments{
   \item{X}{
@@ -41,10 +42,12 @@ A vector representing the number of columns and rows in the grid.
 Optional: A \dQuote{\code{stgrid}} object.
 }
   \item{algthm1}{
-The algorithm used for estimating the integrals in each grid cell for model 1. The three algorithms are \dQuote{\code{mc}}, \dQuote{\code{miser}}, and \dQuote{\code{none}}.  
+The algorithm used for estimating the integrals in each grid cell for model 1. The three algorithms are \dQuote{\code{cubature}}, 
+\dQuote{\code{mc}}, \dQuote{\code{miser}}, and \dQuote{\code{none}}.  
 }
     \item{algthm2}{
-The algorithm used for estimating the integrals in each grid cell for model 2. The three algorithms are \dQuote{\code{mc}}, \dQuote{\code{miser}}, and \dQuote{\code{none}}.  
+The algorithm used for estimating the integrals in each grid cell for model 2. The three algorithms are \dQuote{\code{cubature}}, 
+\dQuote{\code{mc}}, \dQuote{\code{miser}}, and \dQuote{\code{none}}.  
 }
   \item{n}{
 Initial number of sample points in each grid cell for approximating integrals. The number of sample points are iteratively increased by \code{n} until some accuracy threshold is reached.
@@ -54,6 +57,15 @@ The total number of sample points for estimating all integrals for model 1 if th
 }
   \item{n2.miser}{
 The total number of sample points for estimating all integrals for model 2 if the \code{miser} algorithm is selected.  
+}
+  \item{tol}{
+The maximum tolerance.
+}
+  \item{maxEval}{
+The maximum number of function evaluations needed (default 0 implies no limit).  
+}
+  \item{absError}{
+The maximum absolute error tolerated.  
 }
   \item{ints1}{
 An optional vector of integrals for model 1. Must be the same length as the number of rows in \code{grid}, and each element of \code{ints1} should correspond to each row in \code{grid}.  
@@ -71,7 +83,9 @@ where \eqn{\hat{\lambda}(x)}{lambda_hat} is the fitted conditional intensity mod
 
 The conditional intensity functions, \code{cifunction1} and \code{cifunction2}, should take \code{X} as their first argument, and an optional \code{theta} as their second argument, and return a vector of conditional intensity estimates with length equal to the number of points in \code{X}, i.e. the length of \code{X$x}. Both \code{cifunction1} and \code{cifunction2} are required. \code{lambda1} and \code{lambda2} are optional, and if passed will eliminate the need for \code{devresid} to calculate the conditional intensities at each observed point in \code{X}.
 
-The integrals in \eqn{R(B_{i})} are approximated using one of two algorithms: a simple Monte Carlo (\code{mc}) algorithm, or the \code{miser} algorithm. The simple Monte Carlo iteratively adds \code{n} sample points to each grid cell to approximate the integral, and the iteration stops when some threshold in the accuracy of the approximation is reached. The MISER algorithm samples a total number of \code{n1.miser} and/or \code{n2.miser} points in a recursive way, sampling the points in locations that have the highest variance. This part can be very slow and the approximations can be very inaccurate. For highest accuracy these algorithms will require a very large \code{n} or \code{n1.miser}/\code{n2.miser} depending on the complexity of the conditional intensity functions (some might say ~1 billion sample points are needed for a good approximation). Passing the argument \code{ints1} and/or \code{ints2} eliminates the need for approximating the integrals using either of these two algorithms. 
+The integrals in \eqn{R(B_{i})} are approximated using one of three algorithms: the \code{adaptIntegrate} function from the \code{cubature} pakcage, a simple Monte Carlo (\code{mc}) algorithm, or the \code{miser} algorithm. The default is \code{cubature} and should be the fastest approximation. The approximation continues until either the maximum number of evaluations is reached, the error is less than the absolute error, or is less than the tolerance times the integral.
+
+The simple Monte Carlo iteratively adds \code{n} sample points to each grid cell to approximate the integral, and the iteration stops when some threshold in the accuracy of the approximation is reached. The MISER algorithm samples a total number of \code{n1.miser} and/or \code{n2.miser} points in a recursive way, sampling the points in locations that have the highest variance. This part can be very slow and the approximations can be very inaccurate. For highest accuracy these algorithms will require a very large \code{n} or \code{n1.miser}/\code{n2.miser} depending on the complexity of the conditional intensity functions (some might say ~1 billion sample points are needed for a good approximation). Passing the argument \code{ints1} and/or \code{ints2} eliminates the need for approximating the integrals using either of these two algorithms. 
 
 Passing \code{gf} will eliminate the need for \code{devresid} to create a \dQuote{\code{stgrid}} object. If neither \code{grid} or \code{gf} is specified, the default \code{grid} is 10 by 10. 
 }

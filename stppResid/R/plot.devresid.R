@@ -1,4 +1,4 @@
-plot.devresid <- function(x, ..., col.key = rev(heat.colors(100)), cutoffs = NULL, plot.smooth = FALSE, smooth.col = heat.colors, smooth.key = FALSE, contours = FALSE, nlevels = 20)
+plot.devresid <- function(x, ..., col.key = rev(heat.colors(100)), cutoffs = NULL, plot.smooth = FALSE, smooth.col = heat.colors, nlevels = 20)
 {
 	if(plot.smooth == FALSE) {
 		residuals <- x$residuals
@@ -45,13 +45,6 @@ plot.devresid <- function(x, ..., col.key = rev(heat.colors(100)), cutoffs = NUL
 		yl <- sort(unique(yave))
 		z <- matrix(x$residuals, nrow = length(xl), byrow = TRUE)
 		dev.new()
-		if(smooth.key == FALSE) {
-			filled.contour2(xl, yl, z, xlab = "x", ylab = "y", nlevels = nlevels, color.palette = smooth.col, plot.axes = {axis(1); axis(2); points(x[[1]]$x, x[[1]]$y, ...)}) 
-			if(contours == TRUE) {
-				contour(xl,yl,z,add=T)
-			} 
-		} else {
-			filled.contour(xl, yl, z, xlab = "x", ylab = "y", nlevels = nlevels, color.palette = smooth.col, plot.axes = {axis(1); axis(2); points(x[[1]]$x, x[[1]]$y, ...)})
-		}
+		filled.contour(xl, yl, z, xlab = "x", ylab = "y", nlevels = nlevels, color.palette = smooth.col, plot.axes = {axis(1); axis(2); points(x[[1]]$x, x[[1]]$y, ...)})
 	}
 }

@@ -7,9 +7,7 @@ Calculate grid-based residuals
 \code{gridresid} divides the space-time window into a grid of bins and calculates residuals within each bin for a specified conditional intensity model.
 }
 \usage{
-gridresid(X, cifunction, theta = NULL, lambda = NULL, grid = c(10, 10), 
-gf = NULL, resid = c("raw", "pearson", "inverse"), algthm = 
-c("mc", "miser", "none"), n = 100, n.miser = 10000, ints = NULL)
+gridresid(X, cifunction, theta = NULL, lambda = NULL, grid = c(10, 10), gf = NULL, resid = c("raw", "pearson", "inverse"), algthm = c("cubature", "mc", "miser", "none"), n = 100, n.miser = 10000, tol = 1e-05, maxEval = 0, absError = 0, ints = NULL)
 }
 \arguments{
   \item{X}{
@@ -34,13 +32,22 @@ Optional: A \dQuote{\code{stgrid}} object.
 The residual type to be computed. The three types are \dQuote{\code{raw}}, \dQuote{\code{pearson}}, and \dQuote{\code{inverse}}.
 }
   \item{algthm}{
-The algorithm used for estimating the integrals in each grid cell. The three algorithms are \dQuote{\code{mc}}, \dQuote{\code{miser}}, and \dQuote{\code{none}}  
+The algorithm used for estimating the integrals in each grid cell. The three algorithms are \dQuote{\code{cubature}}, \dQuote{\code{mc}}, \dQuote{\code{miser}}, and \dQuote{\code{none}}  
 }
   \item{n}{
 Initial number of sample points in each grid cell for approximating integrals. The number of sample points are iteratively increased by \code{n} until some accuracy threshold is reached.
 }
   \item{n.miser}{
 The total number of sample points for estimating all integrals.  
+}
+  \item{tol}{
+The maximum tolerance.
+}
+  \item{maxEval}{
+The maximum number of function evaluations needed (default 0 implies no limit).  
+}
+  \item{absError}{
+The maximum absolute error tolerated.  
 }
   \item{ints}{
 An optional vector of integrals. Must be the same length as the number of rows in \code{grid}, and each element of \code{ints} should correspond to each row in \code{grid}.  
@@ -67,7 +74,9 @@ If neither type of residual is specified, the default residual to be computed is
 
 The conditional intensity function, \code{cifunction}, should take \code{X} as the first argument, and an optional \code{theta} as the second argument, and return a vector of conditional intensity estimates with length equal to the number of points in \code{X}, i.e. the length of \code{X$x}. \code{cifunction} is required, while \code{lambda} is optional. \code{lambda} eliminates the need for \code{gridresid} to calculate the conditional intensity at each observed point in \code{X}.
 
-The integrals in \eqn{R(B_{i})} are approximated using one of two algorithms: a simple Monte Carlo (\code{mc}) algorithm, or the MISER algorithm. The simple Monte Carlo iteratively adds \code{n} sample points to each grid cell to approximate the integral, and the iteration stops when some threshold in the accuracy of the approximation is reached. The MISER algorithm samples a total number of \code{n.miser} points in a recursive way, sampling the points in locations that have the highest variance. This part can be very slow and the approximations can be very inaccurate. For highest accuracy these algorithms will require a very large \code{n} or \code{n.miser} depending on the complexity of the conditional intensity functions (some might say ~1 billion sample points are needed for a good approximation). Passing the argument \code{ints} eliminates the need for approximating the integrals using either of these two algorithms. 
+The integrals in \eqn{R(B_{i})} are approximated using one of three algorithms: the \code{adaptIntegrate} function from the \code{cubature} pakcage, a simple Monte Carlo (\code{mc}) algorithm, or the \code{miser} algorithm. The default is \code{cubature} and should be the fastest approximation. The approximation continues until either the maximum number of evaluations is reached, the error is less than the absolute error, or is less than the tolerance times the integral.
+
+The simple Monte Carlo iteratively adds \code{n} sample points to each grid cell to approximate the integral, and the iteration stops when some threshold in the accuracy of the approximation is reached. The MISER algorithm samples a total number of \code{n.miser} points in a recursive way, sampling the points in locations that have the highest variance. This part can be very slow and the approximations can be very inaccurate. For highest accuracy these algorithms will require a very large \code{n} or \code{n.miser} depending on the complexity of the conditional intensity functions (some might say ~1 billion sample points are needed for a good approximation). Passing the argument \code{ints} eliminates the need for approximating the integrals using either of these two algorithms. 
 
 Passing \code{gf} will eliminate the need for \code{gridresid} to create a \dQuote{\code{stgrid}} object. If neither \code{grid} or \code{gf} is specified, the default \code{grid} is 10 by 10. 
 }

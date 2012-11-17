@@ -94,7 +94,7 @@ If the \code{miser} algorithm is selected, then a list of the following elements
 Robert Clements
 }
 \seealso{
-\code{\link{make.grid}}
+\code{\link{tessresid}}
 }
 \examples{
 #===> load simulated data <===#

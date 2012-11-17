@@ -1,4 +1,4 @@
-gridresid <- function(X, cifunction, theta = NULL, lambda = NULL, grid = c(10, 10), gf = NULL, resid = c("raw", "pearson", "inverse"), algthm = c("mc", "miser", "none"), n = 100, n.miser = 10000, ints = NULL)
+gridresid <- function(X, cifunction, theta = NULL, lambda = NULL, grid = c(10, 10), gf = NULL, resid = c("raw", "pearson", "inverse"), algthm = c("cubature", "mc", "miser", "none"), n = 100, n.miser = 10000, tol = 1e-05, maxEval = 0, absError = 0, ints = NULL)
 {
 	if(!is.stpp(X))
 		stop("X must be an object of type stpp")
@@ -20,11 +20,11 @@ gridresid <- function(X, cifunction, theta = NULL, lambda = NULL, grid = c(10, 1
 	if(missing(resid))
 		resid = "raw"
 	if(missing(algthm))
-		algthm = "miser"
+		algthm = "cubature"
 	if(!is.null(ints))
 		algthm = "none"
 	if((algthm == "none") & is.null(ints))
-		algthm = "miser"
+		algthm = "cubature"
 	countf.s <- function(xy)
 	{
 		which((gf[[1]]$xmin <= xy[1]) & (gf[[1]]$xmax > xy[1]) & (gf[[1]]$ymin <= xy[2]) & (gf[[1]]$ymax > xy[2]))
@@ -34,6 +34,13 @@ gridresid <- function(X, cifunction, theta = NULL, lambda = NULL, grid = c(10, 1
 		count <- tabulate(place)
 		if(length(count) != nrow(gf$grid.full))
 			count <- c(count, rep(0, nrow(gf$grid.full) - length(count)))
+    if(algthm == "cubature") {
+      bins <- bin.info.cubature(X, cifunction, theta = theta, gf = gf, type = 1, tol = tol, maxEval = maxEval, absError = absError)
+      ints <- bins$integral
+      residuals <- count - ints
+      y <- list(X = X, grid = gf, residuals = residuals)
+      y <- c(y, bins)
+    }
 		if(algthm == "mc") {
 			bins <- bin.info(X, cifunction, theta = theta, gf = gf, type = 1, n.def = n)
 			ints <- bins$integral
@@ -58,6 +65,13 @@ gridresid <- function(X, cifunction, theta = NULL, lambda = NULL, grid = c(10, 1
 		place <- apply(cbind(X$x, X$y), 1, countf.s)
 		sums <- aggregate(cbind(place, sqrt(lamb1)), by = list(place), sum)
 		count[sums[,1]] <- sums[,3]
+		if(algthm == "cubature") {
+		  bins <- bin.info.cubature(X, cifunction, theta = theta, gf = gf, type = 2, tol = tol, maxEval = maxEval, absError = absError)
+		  ints <- bins$integral
+		  residuals <- count - ints
+		  y <- list(X = X, grid = gf, residuals = residuals)
+		  y <- c(y, bins)
+		}
 		if(algthm == "mc") {
 			bins <- bin.info(X, cifunction, theta = theta, gf = gf, type = 2, n.def = n)
 			ints <- bins$integral

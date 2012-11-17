@@ -8,8 +8,7 @@ Plot grid-based residuals
 }
 \usage{
 \method{plot}{gridresid}(x, \ldots, col.key = rev(heat.colors(100)), cutoffs = NULL, 
-plot.smooth = FALSE, smooth.col = heat.colors, smooth.key = FALSE, contours = 
-FALSE, nlevels = 20)
+plot.smooth = FALSE, smooth.col = heat.colors, nlevels = 20)
 }
 \arguments{
   \item{x}{
@@ -29,12 +28,6 @@ Plot a smoothed version of the residuals.
 }
   \item{smooth.col}{
 A vector of colors in hexadecimal format.
-}
-  \item{smooth.key}{
-If \code{TRUE}, a color key will be plotted.  
-}
-  \item{contours}{
-If \code{TRUE}, contour lines will be plotted.  
 }
   \item{nlevels}{
 Number of partitions of the residuals to be plotted.
@@ -65,6 +58,6 @@ cutoffs = c(seq(-2.74, -1.01, length.out = 15),
 seq(-1, 1, length.out = 70), seq(1, 3.83, length.out = 16))
 plot(gresiduals, cutoffs = cutoffs)
 
-plot(gresiduals, plot.smooth = TRUE, contours = TRUE)
+plot(gresiduals, plot.smooth = TRUE)
 }
 
