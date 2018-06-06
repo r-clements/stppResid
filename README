@@ -1,5 +1,7 @@
 stppResid
 
+Hey class!!!!
+
 This repository contains the R code source files, data, and documentation for the stppResid R package.
 
 stppResid stands for "space-time point process residual analysis". The package contains functions for defining a space-time point process (stpp) object, and performing residual analysis using a user defined function for the conditional intensity. 
